@@ -14,5 +14,13 @@
     {% endfor %}
 {% endif %}
 
-<a href="{{ path('form_crea_article')}}"><button>Créer un nouvel article</button></a>
+    <a href="{{ path('form_crea_article')}}"><button>Créer un nouvel article</button></a>
+
+
+    <div class="mb-3">
+        You are logged in as {{ app.user.username }}, <a href="{{ path('info') }}">Logout</a>
+    </div>
+
 {% endblock body %}
+
+
