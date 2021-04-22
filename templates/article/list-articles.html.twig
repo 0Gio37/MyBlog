@@ -1,3 +1,6 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
 {% if listArticle %}
     {% for article in listArticle %}
         <ul class="article">
@@ -12,3 +15,4 @@
 {% endif %}
 
 <a href="{{ path('form_crea_article')}}"><button>Créer un nouvel article</button></a>
+{% endblock body %}

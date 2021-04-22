@@ -52,7 +52,6 @@ class ArticleController extends AbstractController
         $form = $this->createForm(ArticleType::class, $article);
         $form->handleRequest($request);
 
-
         if($form->isSubmitted() && $form->isValid())
         {
             $data = $form->getData();
@@ -93,6 +92,7 @@ class ArticleController extends AbstractController
     public function suppArticle($id): Response
     {
         $article = $this->entityManager->getRepository(Article::class)->find($id);
+
         $el = $this->getDoctrine()->getManager();
         $el->remove($article);
         $el->flush();
@@ -101,9 +101,6 @@ class ArticleController extends AbstractController
         return $this->render('article/list-articles.html.twig', [
             'listArticle' => $listArticle,
         ]);
-
-
-
     }
 
 
