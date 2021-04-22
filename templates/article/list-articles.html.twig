@@ -1,0 +1,14 @@
+{% if listArticle %}
+    {% for article in listArticle %}
+        <ul class="article">
+            <li class="art-title">Titre : {{ article.titre }}</li>
+            <li class="art-author">Auteur : {{ article.Auteur }}</li>
+            <li class="art-content">Contenu : {{ article.Corps }}</li>
+            <li class="art-date">Date  : {{ article.Date | format_datetime(pattern="dd MM yyyy") }}</li>
+            <a href="{{ path('modif_article', {id: article.id}) }}"><button>Modifier</button></a>
+            <a href="{{ path('supp_article', {id: article.id}) }}"><button>Supprimer</button></a>
+        </ul>
+    {% endfor %}
+{% endif %}
+
+<a href="{{ path('form_crea_article')}}"><button>Créer un nouvel article</button></a>

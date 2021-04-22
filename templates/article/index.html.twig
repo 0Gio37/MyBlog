@@ -1,0 +1,13 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+{{ confirm }}
+
+<a href="{{ path('form_crea_article')}}"><button>Créer un nouvel article</button></a>
+<a href="{{ path('list_articles')}}"><button>Voir la liste des articles</button></a>
+{% endblock body %}
+
+
+
+
+
