@@ -97,7 +97,7 @@ class AuthentificatorAuthenticator extends AbstractFormLoginAuthenticator implem
         }
 
         return new RedirectResponse($this->urlGenerator->generate('form_crea_article'));
-        // throw new \Exception('TODO: provide a valid redirect inside '.__FILE__);
+
     }
 
     protected function getLoginUrl()

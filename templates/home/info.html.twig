@@ -8,10 +8,27 @@
     .example-wrapper code { background: #F5F5F5; padding: 2px 6px; }
 </style>
 
-<div class="example-wrapper">
-    <ul>
-        <li>Mon nom : {{ firstname }}</li>
-        <li>Mon prénom :  {{ name }}</li>
-    </ul>
+
+    {% if app.user %}
+        <div class="example-wrapper">
+            <ul>
+                <li>Mon nom : {{ app.user.firstname }}</li>
+                <li>Mon prénom :  {{ app.user.lastname }}</li>
+            </ul>
+        </div>
+<div class="mb-3">
+    You are logged in as {{ app.user.username }} <a href="{{ path('app_logout') }}">Logout</a>
 </div>
+
+        {% else %}
+            <div class="example-wrapper">
+                <p>Vous n'etes pas connecté</p>
+                <a href = "{{ path('app_login') }}"><button>Se connecter</button></a>
+                <a href = "{{ path('register') }}"><button>Créer un compte</button></a>
+            </div>
+
+    {% endif %}
+
+
+
 {% endblock %}

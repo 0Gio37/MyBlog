@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\ArticleType;
 use App\Entity\Article;
 use Doctrine\ORM\EntityManagerInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -23,6 +24,7 @@ class ArticleController extends AbstractController
 
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/article", name="article")
      */
     public function index(): Response
@@ -44,6 +46,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/article/formulaire", name="form_crea_article")
      */
     public function newArticle(Request $request): Response
@@ -67,6 +70,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route ("/article/formulaire-modif-article/{id}", name="modif_article")
      */
     public function modifArticle(Request $request, $id): Response
@@ -87,6 +91,7 @@ class ArticleController extends AbstractController
     }
 
     /**
+     * @IsGranted("ROLE_ADMIN")
      * @Route ("/article/supp/{id}", name="supp_article")
      */
     public function suppArticle($id): Response

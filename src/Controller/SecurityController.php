@@ -4,13 +4,12 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Form\RegisterType;
-use Cassandra\Type\UserType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\ResponseHeaderBag;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 
 class SecurityController extends AbstractController
@@ -50,15 +49,18 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function index(Request $request): Response
+    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
     {
-        $user = new user();
-        $form = $this->createForm(UserType::class, $user);
+        $user = new User();
+        $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid())
         {
             $user =$form->getData();
+
+            $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+
             $this->entityManager->persist($user);
             $this->entityManager->flush();
         }

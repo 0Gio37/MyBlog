@@ -9,7 +9,28 @@
 </style>
 
 <div class="example-wrapper">
-    <h1>Vous êtes sur la page d'accueil {{ controller_name }}! </h1>
-
+    <h1>Vous êtes sur la page d'accueil</h1>
 </div>
+
+
+    {% if is_granted('ROLE_ADMIN') %}
+        <p>vous etes un utilisateur / statut = {{ app.user.roles[0]}} </p>
+        <button><a href="{{ path('list_articles')}}">Modifier un article</a></button>
+
+    {% elseif is_granted('ROLE_USER') %}
+        <p>vous etes un utilsateur / statut = {{ app.user.roles[0]}}</p>
+
+    {% else %}
+        <a href = "{{ path('app_login') }}"><button>Se connecter</button></a>
+        <a href = "{{ path('register') }}"><button>Créer un compte</button></a>
+    {% endif %}
+
+    {% if app.user %}
+        <div class="mb-3">
+            You are logged in as {{ app.user.username }} <a href="{{ path('app_logout') }}">Logout</a>
+        </div>
+    {% endif %}
+
+
+
 {% endblock %}
