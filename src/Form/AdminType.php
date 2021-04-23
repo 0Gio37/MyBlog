@@ -11,7 +11,6 @@ use Symfony\Component\Form\Extension\Core\Type\EmailType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
-use Symfony\Component\Validator\Constraints\Json;
 
 class AdminType extends AbstractType
 {
@@ -19,11 +18,14 @@ class AdminType extends AbstractType
     {
         $builder
             ->add('email', EmailType::class)
-            ->add('roles',ChoiceType::class, [
+
+        /*  ->add('roles',ChoiceType::class, [
                 'choices' => [
                         'admin' => ["ROLE_ADMIN"],
                         'user' => ["ROLE_USER"],
                        'visitor' => ["ROLE_VISITOR"] ]])
+        */
+
             ->add('Submit', SubmitType::class)
         ;
     }

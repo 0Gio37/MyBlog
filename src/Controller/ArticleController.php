@@ -24,7 +24,6 @@ class ArticleController extends AbstractController
 
 
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/article", name="article")
      */
     public function index(): Response
@@ -46,7 +45,6 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_USER")
      * @Route("/article/formulaire", name="form_crea_article")
      */
     public function newArticle(Request $request): Response
@@ -70,7 +68,7 @@ class ArticleController extends AbstractController
     }
 
     /**
-     * @IsGranted("ROLE_USER")
+     * @IsGranted("ROLE_MODERATE")
      * @Route ("/article/formulaire-modif-article/{id}", name="modif_article")
      */
     public function modifArticle(Request $request, $id): Response

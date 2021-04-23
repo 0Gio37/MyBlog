@@ -96,6 +96,11 @@ class AuthentificatorAuthenticator extends AbstractFormLoginAuthenticator implem
             return new RedirectResponse($targetPath);
         }
 
+
+        if(in_array('ROLE_ADMIN', $token->getRoleNames())){
+            return new RedirectResponse($this->urlGenerator->generate('admin'));
+        }
+
         return new RedirectResponse($this->urlGenerator->generate('form_crea_article'));
 
     }
