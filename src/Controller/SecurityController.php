@@ -5,9 +5,11 @@ namespace App\Controller;
 use App\Entity\User;
 use App\Form\RegisterType;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
@@ -52,7 +54,7 @@ class SecurityController extends AbstractController
     /**
      * @Route("/register", name="register")
      */
-    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder): Response
+    public function index(Request $request, UserPasswordEncoderInterface $passwordEncoder, MailerInterface $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
@@ -62,10 +64,25 @@ class SecurityController extends AbstractController
         {
             $user =$form->getData();
 
+            // encode le mot de passe
             $user->setPassword($passwordEncoder->encodePassword($user, $user->getPassword()));
+            $userMail = $user->getEmail();
 
             $this->entityManager->persist($user);
+            //dd($userMail);
             $this->entityManager->flush();
+
+            $message = (new TemplatedEmail())
+                -> from('admin@myblog.fr')
+                -> to($userMail)
+                -> subject('Inscription réussie')
+                ->htmlTemplate('mail/registerok.html.twig')
+                ->context([
+                    'user'=> $user,
+                    'mail'=> $userMail
+                ]);
+            $mailer->send($message);
+            return $this->redirectToRoute('info');
         }
         return $this->render('register/index.html.twig', [
             'form' => $form->createView()

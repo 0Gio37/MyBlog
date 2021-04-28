@@ -2,6 +2,7 @@
 
 namespace App\Controller\Admin;
 
+use App\Entity\Article;
 use App\Entity\User;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use EasyCorp\Bundle\EasyAdminBundle\Config\Dashboard;
@@ -21,8 +22,8 @@ class DashboardController extends AbstractDashboardController
      */
     public function index(): Response
     {
-        return parent::index();
-        //return $this->render('base.html.twig');
+        //return parent::index();
+        return $this->render('Bundle/EasyAdminBundle/welcome.html.twig');
     }
 
     public function configureDashboard(): Dashboard
@@ -35,5 +36,6 @@ class DashboardController extends AbstractDashboardController
     {
         yield MenuItem::linktoDashboard('Dashboard', 'fa fa-home');
         yield MenuItem::linkToCrud('Utilisateurs', 'fas fa-user', User::class);
+        yield MenuItem::linkToCrud('Articles', 'fas fa-user', Article::class);
     }
 }
